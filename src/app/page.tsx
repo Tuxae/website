@@ -59,7 +59,7 @@ export default async function Home() {
                 <div className="w-full bg-black text-white p-10">
                     <h1 className="w-full text-3xl text-center">ALL SYSTEMS OPERATIONAL</h1>
                     <h1 className="w-full text-center">(ou pas...)</h1>
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-5 my-10">
+                    <div className="grid grid-cols-1 md:grid-cols-5 gap-5 my-10">
                         {stacks.map((s) => (
                             <div key={s.name} className="border-white border-dashed border-[0.5px] px-5 py-2 group opacity-70 hover:opacity-100 transition-all duration-300">
                                 <h2 className="text-2xl">{s.name}</h2>
