@@ -1,0 +1,19 @@
+services:
+  website:
+    image: website:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: build
+    container_name: website
+    # ports:
+    #   - "8080:80"
+    environment:
+      TZ: 'Europe/Paris'
+    networks:
+      - external
+
+networks:
+  external:
+    name: traefik
+    external: true
