@@ -1,103 +1,44 @@
-import Image from "next/image";
+import Scene from "@/components/ui/banner";
+import Tux from "@/components/ui/tux";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import EmailSharpIcon from '@mui/icons-material/EmailSharp';
+import Link from "next/link";
+import GrenadeIcon from "@/components/ui/grenadeicon";
+
 
 export default function Home() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+        <main className="w-full bg-white grid-style">
+            <div className="absolute w-full inset-0 flex items-end justify-center pb-10">
+                <div className="backdrop-blur-2xl flex flex-row gap-5 items-center justify-center pr-7 pl-4 py-2 border bg-transparent rounded-full hover:border-gray-500 group ">
+                    <Tux className="w-12 h-12 transition-all duration-300 mr-0 group-hover:mr-2 opacity-50 group-hover:opacity-75 border-r border-black" />
+                    <Link className="transition-all duration-300 opacity-50 hover:opacity-100" href={"https://github.com/Tuxae"}><GitHubIcon fontSize="large"/></Link>
+                    <Link className="transition-all duration-300 opacity-50 hover:opacity-100" href={"mailto:tuxae@ensae.fr"}><EmailSharpIcon fontSize="large"/></Link>
+                    <Link className="transition-all duration-300 opacity-50 hover:opacity-100 fill-[#d30b1f]" href={"https://grenade.tuxae.fr"}><GrenadeIcon className="w-10 h-10"/></Link>
+                </div>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            </div>
+            <div className="flex flex-col px-16 h-dvh">
+                <div className="h-[15%] text-3xl md:text-7xl flex flex-col justify-end text-black w-full align-bottom">
+                <span
+                    className="inline-block align-bottom w-full"
+                    style={{ textAlignLast: "justify" }}
+                >
+                    BIENVENUE CHEZ
+                </span>
+                </div>
+                <div className="flex grow bg-black w-full text-white text-center text-9xl"><Scene /></div>
+                <div className="h-[30%] text-2xl md:text-7xl flex flex-col justify-start text-black w-full align-bottom">
+                <span
+                    className="inline-block align-bottom w-full text-justify"
+                    style={{ textAlignLast: "justify" }}
+                >
+                    ASSOCIATION D&#39;INFORMATIQUE DE<br />
+                    L&#39;ENSAE PARIS
+                </span>
+                </div>
+            </div>
+
+        </main>
   );
 }
