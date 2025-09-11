@@ -1,3 +1,5 @@
+"use server"
+
 import Scene from "@/components/ui/banner";
 import Tux from "@/components/ui/tux";
 import GitHubIcon from '@mui/icons-material/GitHub';
