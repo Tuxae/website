@@ -1,13 +1,13 @@
-"use server"
-
 import Scene from "@/components/ui/banner";
 import Tux from "@/components/ui/tux";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import EmailSharpIcon from '@mui/icons-material/EmailSharp';
 import Link from "next/link";
 import GrenadeIcon from "@/components/ui/grenadeicon";
-import { KomodoClient, Types } from "komodo_client";
+import { KomodoClient } from "komodo_client";
 
+
+export const dynamic = 'force-dynamic';
 
 export default async function Home() {
 
