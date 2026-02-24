@@ -119,7 +119,7 @@ export default async function Home() {
                     {/* Feature 2: Kfet */}
                     <div className="p-8 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all hover:-translate-y-1 bg-white">
                         <div className="w-12 h-12 bg-black text-white flex items-center justify-center mb-6">
-                            <KfetIcon />
+                            <KfetIcon strokeColor={"stroke-white"} />
                         </div>
                         <h3 className="text-2xl font-bold mb-3">Kfet</h3>
                         <p className="text-gray-600 mb-6">L&#39;application de la Kfet de l&#39;ENSAE. Commandes, carte et gestion de compte.</p>
