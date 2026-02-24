@@ -2,9 +2,9 @@
 
 import { JSX, Suspense, useRef, useMemo, useState } from "react"
 import * as THREE from "three"
-import { Canvas, useFrame } from "@react-three/fiber"
+import { Canvas, useFrame, useThree } from "@react-three/fiber"
 import { Text3D, Center, Float, Stars } from "@react-three/drei"
-import { EffectComposer, Bloom, ChromaticAberration, Noise, Glitch } from "@react-three/postprocessing"
+import { EffectComposer, Bloom, ChromaticAberration, Noise, Glitch, Scanline } from "@react-three/postprocessing"
 import { Vector2 } from "three"
 
 function SingleLetter({ char, position }: { char: string, position: [number, number, number] }) {
@@ -125,6 +125,7 @@ function Particles() {
         if (!mesh.current) return
         
         particles.forEach((particle, i) => {
+            // eslint-disable-next-line prefer-const
             let { t, factor, speed, xFactor, yFactor, zFactor } = particle
             t = particle.t += speed / 2
             const a = Math.cos(t) + Math.sin(t * 1) / 10
@@ -171,10 +172,28 @@ function GridFloor() {
     )
 }
 
+function ResponsiveCamera() {
+    const { camera, size } = useThree()
+    
+    useFrame(() => {
+        const aspect = size.width / size.height
+        // Calculate required distance to fit width of ~14 units
+        // dist = width / (2 * tan(fov/2) * aspect)
+        // tan(22.5) = 0.4142
+        // dist = 14 / (0.8284 * aspect)
+        // dist approx 17 / aspect
+        
+        const targetZ = Math.max(10, 17 / aspect)
+        camera.position.z = THREE.MathUtils.lerp(camera.position.z, targetZ, 0.1)
+    })
+    return null
+}
+
 export default function Scene(): JSX.Element {
     return (
         <Canvas dpr={[1, 2]} camera={{ position: [0, 0, 10], fov: 45 }}>
             <Suspense fallback={null}>
+                <ResponsiveCamera />
                 <color attach="background" args={["#000000"]} />
                 <fog attach="fog" args={["#000000", 10, 40]} />
                 
@@ -191,10 +210,11 @@ export default function Scene(): JSX.Element {
                 <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
                 
                 {/* Post Processing */}
-                <EffectComposer disableNormalPass>
+                <EffectComposer enableNormalPass={false}>
                     <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.5} radius={0.5} />
                     <ChromaticAberration offset={new Vector2(0.0005, 0.0005)} />
-                    <Noise opacity={0.05} />
+                    <Noise opacity={0.2} />
+                    <Scanline density={1.5} opacity={0.1} />
                     <Glitch 
                         delay={new Vector2(1.5, 3.5)} 
                         duration={new Vector2(0.1, 0.3)} 
