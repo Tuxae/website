@@ -9,6 +9,7 @@ import StorageIcon from '@mui/icons-material/Storage';
 import KfetIcon from "@/components/ui/kfeticon";
 import SchoolIcon from '@mui/icons-material/School';
 import GroupsIcon from '@mui/icons-material/Groups';
+import Marquee from "@/components/ui/marquee";
 
 export const dynamic = 'force-dynamic';
 
@@ -73,33 +74,7 @@ export default async function Home() {
             </div>
 
             {/* Marquee Section */}
-            <div className="w-full bg-[#d30b1f] text-white py-4 overflow-hidden border-y-2 border-black">
-                <div className="animate-marquee-left whitespace-nowrap flex gap-8 text-xl font-mono font-bold uppercase tracking-widest">
-                    <span>Infrastructure</span>
-                    <span>•</span>
-                    <span>Robotique</span>
-                    <span>•</span>
-                    <span>Data Science</span>
-                    <span>•</span>
-                    <span>Développement Web</span>
-                    <span>•</span>
-                    <span>Deep Learning</span>
-                    <span>•</span>
-                    <span>Réseau</span>
-                    <span>•</span>
-                    <span>Infrastructure</span>
-                    <span>•</span>
-                    <span>Robotique</span>
-                    <span>•</span>
-                    <span>Data Science</span>
-                    <span>•</span>
-                    <span>Développement Web</span>
-                    <span>•</span>
-                    <span>Deep Learning</span>
-                    <span>•</span>
-                    <span>Réseau</span>
-                </div>
-            </div>
+            <Marquee />
 
             {/* Features Grid Section */}
             <section className="w-full px-4 md:px-16 py-24 bg-white border-t-2 border-black">
