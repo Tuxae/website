@@ -122,7 +122,7 @@ export default async function Home() {
                             <KfetIcon />
                         </div>
                         <h3 className="text-2xl font-bold mb-3">Kfet</h3>
-                        <p className="text-gray-600 mb-6">L&#39;application de la Kfet de l&#39;ENSAE. Commandes, menus et gestion de compte.</p>
+                        <p className="text-gray-600 mb-6">L&#39;application de la Kfet de l&#39;ENSAE. Commandes, carte et gestion de compte.</p>
                         <Link href="https://kfet.tuxae.fr" target="_blank" className="inline-flex items-center font-bold hover:underline group">
                             Ouvrir <ArrowOutwardIcon className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                         </Link>
@@ -134,7 +134,7 @@ export default async function Home() {
                             <GroupsIcon fontSize="large" />
                         </div>
                         <h3 className="text-2xl font-bold mb-3">Unaite</h3>
-                        <p className="text-gray-600 mb-6">Fédération des associations d&#39;intelligence artificielle, dont Tuxae fait partie.</p>
+                        <p className="text-gray-600 mb-6">Tuxae fait partie d'Unaite, fédération des associations d&#39;intelligence artificielle des grandes écoles françaises.</p>
                         <Link href="https://unaite.fr" target="_blank" className="inline-flex items-center font-bold hover:underline group">
                             Découvrir Unaite <ArrowOutwardIcon className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
                         </Link>
@@ -146,10 +146,10 @@ export default async function Home() {
                             <StorageIcon fontSize="large" />
                         </div>
                         <h3 className="text-2xl font-bold mb-3">Infrastructure</h3>
-                        <p className="text-gray-600 mb-6">Tuxae possède plusieurs serveurs pour héberger les sites et des GPU pour les gros calculs des membres.</p>
-                        <div className="inline-flex items-center font-bold text-gray-400 cursor-not-allowed">
-                            Accès Membres
-                        </div>
+                        <p className="text-gray-600 mb-6">Tuxae possède plusieurs serveurs pour héberger les sites et des GPU pour les gros calculs.</p>
+                        <Link href="https://komodo.tuxae.fr" className="inline-flex items-center font-bold hover:underline group">
+                            Accès Membre <ArrowOutwardIcon className="ml-1 w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                        </Link>
                     </div>
 
                     {/* Feature 5: Ateliers */}
