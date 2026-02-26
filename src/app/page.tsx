@@ -55,9 +55,9 @@ export default async function Home() {
 
             {/* Floating Dock */}
             <div className="fixed bottom-6 left-0 right-0 flex justify-center z-50 pointer-events-none">
-                <div className="pointer-events-auto backdrop-blur-xl bg-white/90 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-8 py-3 flex items-center gap-8 transition-transform hover:scale-105 duration-300">
-                    <Tux className="w-10 h-10 opacity-100" />
-                    <div className="w-0.5 h-8 bg-black/10" />
+                <div className="pointer-events-auto backdrop-blur-xl bg-white/90 border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-4 md:px-8 py-2 md:py-3 flex items-center gap-4 md:gap-8 transition-transform hover:scale-105 duration-300">
+                    <Tux className="w-10 h-10 opacity-100 hidden md:block" />
+                    <div className="w-0.5 h-8 bg-black/10 hidden md:block" />
                     <Link href="https://github.com/Tuxae" target="_blank" className="text-black/70 hover:text-black transition-colors transform hover:-translate-y-1">
                         <GitHubIcon fontSize="large" />
                     </Link>
