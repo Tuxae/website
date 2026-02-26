@@ -1,78 +1,131 @@
 "use client";
 
-import { useRef } from "react";
-import {
-  motion,
-  useScroll,
-  useSpring,
-  useTransform,
-  useMotionValue,
-  useVelocity,
-  useAnimationFrame,
-} from "motion/react";
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 
-function wrap(min: number, max: number, v: number) {
-  const rangeSize = max - min;
-  return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
-}
+const ITEMS = [
+  "Infrastructure",
+  "Robotique",
+  "Data Science",
+  "Developpement Web",
+  "Deep Learning",
+  "Reseau",
+] as const;
+
+const SPEED_PX_PER_SECOND = 80;
 
 export default function Marquee() {
-  const baseX = useMotionValue(0);
-  const { scrollY } = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
-  const smoothVelocity = useSpring(scrollVelocity, {
-    damping: 50,
-    stiffness: 400
-  });
-  const velocityFactor = useTransform(smoothVelocity, [0, 1000], [0, 5], {
-    clamp: false
-  });
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const firstCopyRef = useRef<HTMLDivElement>(null);
 
-  /**
-   * This is a magic number for the skew effect. You can also make it
-   * responsive to scroll velocity.
-   */
-  const x = useTransform(baseX, (v) => `${wrap(-20, -45, v)}%`);
+  const [copies, setCopies] = useState(2);
 
-  const directionFactor = useRef<number>(1);
-  useAnimationFrame((t, delta) => {
-    let moveBy = directionFactor.current * 2 * (delta / 1000);
+  const copyWidthRef = useRef(0);
+  const offsetRef = useRef(0);
+  const lastTimestampRef = useRef<number | null>(null);
+  const reducedMotionRef = useRef(false);
 
-    /**
-     * This is what changes the direction of the scroll once we
-     * switch scrolling directions.
-     */
-    if (velocityFactor.get() < 0) {
-      directionFactor.current = -1;
-    } else if (velocityFactor.get() > 0) {
-      directionFactor.current = 1;
+  useLayoutEffect(() => {
+    const updateSizing = () => {
+      const viewportWidth = viewportRef.current?.clientWidth ?? 0;
+      const copyWidth = firstCopyRef.current?.getBoundingClientRect().width ?? 0;
+
+      if (!viewportWidth || !copyWidth) {
+        return;
+      }
+
+      copyWidthRef.current = copyWidth;
+      const requiredCopies = Math.max(2, Math.ceil(viewportWidth / copyWidth) + 1);
+      setCopies((current) => (current === requiredCopies ? current : requiredCopies));
+    };
+
+    updateSizing();
+
+    const observer = new ResizeObserver(updateSizing);
+    if (viewportRef.current) {
+      observer.observe(viewportRef.current);
+    }
+    if (firstCopyRef.current) {
+      observer.observe(firstCopyRef.current);
     }
 
-    moveBy += directionFactor.current * moveBy * velocityFactor.get();
+    return () => observer.disconnect();
+  }, []);
 
-    baseX.set(baseX.get() + moveBy);
-  });
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncPreference = () => {
+      reducedMotionRef.current = mediaQuery.matches;
+    };
+
+    syncPreference();
+    mediaQuery.addEventListener("change", syncPreference);
+
+    return () => mediaQuery.removeEventListener("change", syncPreference);
+  }, []);
+
+  useEffect(() => {
+    let animationFrameId = 0;
+
+    const tick = (timestamp: number) => {
+      const track = trackRef.current;
+      if (!track) {
+        animationFrameId = requestAnimationFrame(tick);
+        return;
+      }
+
+      const copyWidth = copyWidthRef.current;
+      if (!copyWidth || reducedMotionRef.current) {
+        track.style.transform = "translate3d(0, 0, 0)";
+        lastTimestampRef.current = timestamp;
+        animationFrameId = requestAnimationFrame(tick);
+        return;
+      }
+
+      if (lastTimestampRef.current === null) {
+        lastTimestampRef.current = timestamp;
+      }
+
+      const deltaSeconds = (timestamp - lastTimestampRef.current) / 1000;
+      lastTimestampRef.current = timestamp;
+
+      offsetRef.current = (offsetRef.current + deltaSeconds * SPEED_PX_PER_SECOND) % copyWidth;
+      track.style.transform = `translate3d(${-offsetRef.current}px, 0, 0)`;
+
+      animationFrameId = requestAnimationFrame(tick);
+    };
+
+    animationFrameId = requestAnimationFrame(tick);
+
+    return () => cancelAnimationFrame(animationFrameId);
+  }, []);
+
+  const renderItems = () =>
+    ITEMS.map((item, index) => (
+      <Fragment key={`${item}-${index}`}>
+        <span>{item}</span>
+        <span aria-hidden="true">&bull;</span>
+      </Fragment>
+    ));
 
   return (
-    <div className="w-full bg-[#d30b1f] text-white py-4 overflow-hidden border-y-2 border-black">
-      <motion.div className="whitespace-nowrap flex gap-8 text-xl font-mono font-bold uppercase tracking-widest" style={{ x }}>
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="flex gap-8 shrink-0">
-            <span>Infrastructure</span>
-            <span>•</span>
-            <span>Robotique</span>
-            <span>•</span>
-            <span>Data Science</span>
-            <span>•</span>
-            <span>Développement Web</span>
-            <span>•</span>
-            <span>Deep Learning</span>
-            <span>•</span>
-            <span>Réseau</span>
-            <span>•</span>
+    <div
+      ref={viewportRef}
+      className="w-full overflow-hidden border-y-2 border-black bg-[#d30b1f] py-4 text-white"
+    >
+      <div
+        ref={trackRef}
+        className="flex w-max whitespace-nowrap text-xl font-mono font-bold uppercase tracking-widest will-change-transform"
+      >
+        <div ref={firstCopyRef} className="flex shrink-0 items-center gap-8 pr-8">
+          {renderItems()}
+        </div>
+        {Array.from({ length: Math.max(0, copies - 1) }).map((_, index) => (
+          <div key={index} aria-hidden="true" className="flex shrink-0 items-center gap-8 pr-8">
+            {renderItems()}
           </div>
         ))}
-      </motion.div>
+      </div>
     </div>
   );
 }
